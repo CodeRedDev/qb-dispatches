@@ -68,7 +68,7 @@ QBCore.Functions.CreateCallback('qb-dispatches:server:DeleteDispatchesForFractio
     cb(removed)
 end)
 
-QBCore.Functions.CreateCallback('qb-dispatches:server:DeleteAllDispatches', function(_, cbs)
+QBCore.Functions.CreateCallback('qb-dispatches:server:DeleteAllDispatches', function(_, cb)
     local removed = MySQL.Sync.execute('TRUNCATE TABLE dispatches', {})
     cb(removed)
 end)

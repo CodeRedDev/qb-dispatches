@@ -10,7 +10,8 @@ server_scripts {
 }
 
 client_scripts {
-    'client/DispatchDaoProxy.lua'
+    'client/DispatchDaoProxy.lua',
+    -- 'client/test/DaoTest.lua',
 }
 
 dependency 'oxmysql'
