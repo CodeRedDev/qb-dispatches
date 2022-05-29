@@ -24,6 +24,10 @@ function DeleteDispatch(cb, DispatchId)
     QBCore.Functions.TriggerCallback('qb-dispatches:server:DeleteDispatch', cb, DispatchId)
 end
 
+function DeleteDispatchesForFraction(cb, fractionName)
+    QBCore.Functions.TriggerCallback('qb-dispatches:server:DeleteDispatchesForFraction', cb, fractionName)
+end
+
 function DeleteAllDispatches(cb)
     QBCore.Functions.TriggerCallback('qb-dispatches:server:DeleteAllDispatches', cb)
 end
@@ -34,4 +38,5 @@ exports('GetDispatchesByPlayer', GetDispatchesByPlayer)
 exports('GetDispatchesByFraction', GetDispatchesByFraction)
 exports('UpdateDispatchStatus', UpdateDispatchStatus)
 exports('DeleteDispatch', DeleteDispatch)
+exports('DeleteDispatchesForFraction', DeleteDispatchesForFraction)
 exports('DeleteAllDispatches', DeleteAllDispatches)

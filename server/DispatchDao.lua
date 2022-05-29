@@ -63,6 +63,11 @@ QBCore.Functions.CreateCallback('qb-dispatches:server:DeleteDispatch', function(
     cb(removed)
 end)
 
+QBCore.Functions.CreateCallback('qb-dispatches:server:DeleteDispatchesForFraction', function(_, cb, fractionName)
+    local removed = MySQL.Sync.execute('DELETE FROM dispatches WHERE to_fraction = ?', {fractionName})
+    cb(removed)
+end)
+
 QBCore.Functions.CreateCallback('qb-dispatches:server:DeleteAllDispatches', function(_, cbs)
     local removed = MySQL.Sync.execute('TRUNCATE TABLE dispatches', {})
     cb(removed)
