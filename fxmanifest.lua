@@ -9,6 +9,10 @@ server_scripts {
 	'server/DispatchDao.lua',
 }
 
+client_scripts {
+    'client/DispatchDaoProxy.lua'
+}
+
 dependency 'oxmysql'
 
 lua54 'yes'
