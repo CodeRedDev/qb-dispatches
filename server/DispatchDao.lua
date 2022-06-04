@@ -1,5 +1,15 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
+--
+
+local function NotifyDispatchCreated(dispatch)
+    TriggerClientEvent('qb-dispatches:DispatchCreated', -1, dispatch)
+end
+
+local function NotifyDispatchStatusUpdated(id, newStatus)
+    TriggerClientEvent('qb-dispatches:DispatchStatusUpdated', -1, id, newStatus)
+end
+
 -- CREATE Callbacks
 
 -- @param source        Player who wants to create the dispatch
@@ -8,10 +18,11 @@ local QBCore = exports['qb-core']:GetCoreObject()
 QBCore.Functions.CreateCallback('qb-dispatches:server:CreateDispatch', function(source, cb, DispatchData)
     local Player = QBCore.Functions.GetPlayer(source)
     if Player ~= nil then
-        MySQL.insert(
+        local dispatch = MySQL.insert(
             'INSERT INTO dispatches (`citizenid`, `phone_number`, `to_fraction`, `message`) VALUES (?, ?, ?, ?)', 
             {Player.PlayerData.citizenid, Player.PlayerData.charinfo.phone, DispatchData.to_fraction, DispatchData.message}
         )
+        NotifyDispatchCreated(dispatch)
         cb(true)
     else
         cb(false, 'Player not found!')
@@ -51,6 +62,7 @@ end)
 -- @param DispatchStatus    New status for the dispatch (0 = new; 1 = accepted; 2 = declined)
 QBCore.Functions.CreateCallback('qb-dispatches:server:UpdateDispatchStatus', function(_, cb, DispatchId, DispatchStatus)
     local updated = MySQL.update.await('UPDATE dispatches SET status = ? WHERE id = ?', {DispatchStatus, DispatchId})
+    NotifyDispatchStatusUpdated(DispatchId, DispatchStatus)
     cb(updated)
 end)
 
